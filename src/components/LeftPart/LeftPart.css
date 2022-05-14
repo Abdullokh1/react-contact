@@ -1,0 +1,12 @@
+.form-control, .form-select{
+  padding: 15px;
+  width: 400px;
+}
+.submit-btn{
+  padding: 8px 25px;
+}
+.form{
+  position: absolute;
+  border-right: 3px solid #188452;
+  padding-right: 160px;
+}

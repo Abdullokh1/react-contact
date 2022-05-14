@@ -1,0 +1,10 @@
+.output{
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+.output-name{
+  font-size: 18px;
+}
