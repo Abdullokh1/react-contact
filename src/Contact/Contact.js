@@ -15,20 +15,19 @@ export default class Contact extends Component {
   };
 
 
-  sumbmitHandler(){
-     console.log('h111');
+  sumbmitHandler(e){
+
     
   }
 
 
   render() {
-    console.log(this.state);
 
     return (
       <div className="main-box">
         <div className="inner-box">
           <div className="col-4">
-            <form className="form">
+            <form onSubmit={this.sumbmitHandler()} className="form">
               <div className="mb-4">
                 <label className="mb-2" htmlFor="name">
                   First Name
@@ -85,7 +84,7 @@ export default class Contact extends Component {
                 <option value="3">Collegue</option>
               </select>
 
-              <button onSubmit={this.sumbmitHandler()} type="submit" className="btn submit-btn btn-success mt-4">
+              <button type="submit" className="btn submit-btn btn-success mt-4">
                 Submit
               </button>
             </form>
