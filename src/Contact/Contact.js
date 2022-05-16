@@ -1,67 +1,99 @@
 import React, { Component } from "react";
 import RightPart from "../components/RightPart/RightPart";
 import "../components/LeftPart/LeftPart.css";
-import '../components/RightPart/RightPartOutput.css'
+import "../components/RightPart/RightPartOutput.css";
+import Buttons from "../components/RightPart/Buttons";
 
-
+const arr = []
 
 export default class Contact extends Component {
-
+ 
   state = {
-    firstName: null,
-    secondName: null,
-    Number: null,
-    category: null
+    listObj: {
+      fullName: null,
+      Number: null,
+      category: null,
+    },
+    listArray: [
+      {
+        fullName: "Abdullokh Giyasov",
+        Number: 99922882,
+        category: "All",
+      },
+    ],
   };
 
 
-  sumbmitHandler(e){
+  Typehandler = (e) => {
+    let obj = {};
 
+    if (e.target.type === "text") {
+      obj.fullName = e.target.value;
+    }
+
+    if (e.target.type === "number") {
+      obj.Number = e.target.value;
+    }
+    if (e.target.type === "select-one") {
+      obj.category = e.target.value;
+    }
+    this.setState({ listObj: { ...this.state.listObj, ...obj } });
+  };
+
+  sumbmitHandler = (e) => {
+    e.preventDefault();
+    this.setState({ listArray: [...this.state.listArray, this.state.listObj] });
+    e.target.reset();
+  };
+
+  btnHandler = (e) => {
+    let value = e.target.textContent;
     
-  }
 
+    switch(value){
+      case 'Friends':
+        this.state.listArray = this.state.listArray.filter((item) => {
+          return item.category === "Friends";
+        });
+        break
+        
+      case 'Family':
+        this.state.listArray = this.state.listArray.filter((item) => {
+          return item.category === "Family";
+        });
+        break
+    }
+      this.setState({
+        fullName: null,
+        Number: null,
+      });
+  };
 
   render() {
-
     return (
       <div className="main-box">
         <div className="inner-box">
           <div className="col-4">
-            <form onSubmit={this.sumbmitHandler()} className="form">
+            <form onSubmit={this.sumbmitHandler} className="form">
               <div className="mb-4">
                 <label className="mb-2" htmlFor="name">
-                  First Name
+                  Full Name
                 </label>
                 <input
-                  onChange={(e) => this.setState({ firstName: e.target.value })}
+                  onChange={this.Typehandler}
                   type="text"
                   id="name"
                   className="form-control"
-                  placeholder="First Name"
+                  placeholder="Full Name"
                   required
                 ></input>
               </div>
-
-              <div className="mb-4">
-                <label className="mb-2" htmlFor="lastname">
-                  Last Name
-                </label>
-                <input
-                  onChange={(e) => this.setState({secondName: e.target.value})}
-                  type="text"
-                  id="lastname"
-                  className="form-control"
-                  placeholder="Last Name"
-                  required
-                ></input>
-              </div>
-
               <div className="mb-4">
                 <label className="mb-2" htmlFor="number">
                   Number
                 </label>
                 <input
-                  onChange={(e) => this.setState({Number: e.target.value})}
+                  onChange={this.Typehandler}
                   type="number"
                   id="number"
                   className="form-control"
@@ -74,14 +106,14 @@ export default class Contact extends Component {
                 Categories
               </label>
               <select
-                onChange={(e) => this.setState({category: e.target.value})}
+                onChange={this.Typehandler}
                 className="form-select"
-                aria-label="Default select example"
-                >
-                <option defaultValue>To whom</option>
-                <option value="1">Friends</option>
-                <option value="2">Family</option>
-                <option value="3">Collegue</option>
+                type="select"
+              >
+                <option defaultValue>All</option>
+                <option value="Friends">Friends</option>
+                <option value="Family">Family</option>
+                <option value="Collegue">Collegue</option>
               </select>
 
               <button type="submit" className="btn submit-btn btn-success mt-4">
@@ -91,12 +123,20 @@ export default class Contact extends Component {
           </div>
 
           <div>
-            
-            <RightPart 
-              firstName={this.state.firstName}
-              lastName={this.state.secondName}
-              number={this.state.Number}
-            />
+            <ul className="button-wrapper">
+              <Buttons buttonHandle={this.btnHandler} />
+            </ul>
+
+            {this.state.listArray.map((item, i) => {
+              return (
+                <RightPart
+                  key={i}
+                  name={item.fullName}
+                  category={item.category}
+                  num={item.Number}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
