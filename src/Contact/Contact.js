@@ -132,7 +132,6 @@ export default class Contact extends Component {
                 <RightPart
                   key={i}
                   name={item.fullName}
-                  category={item.category}
                   num={item.Number}
                 />
               );
