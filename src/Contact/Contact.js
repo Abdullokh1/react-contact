@@ -21,6 +21,8 @@ export default class Contact extends Component {
         category: "All",
       },
     ],
+
+    filterArray: []
   };
 
 
@@ -38,35 +40,54 @@ export default class Contact extends Component {
       obj.category = e.target.value;
     }
     this.setState({ listObj: { ...this.state.listObj, ...obj } });
+    
   };
 
   sumbmitHandler = (e) => {
     e.preventDefault();
     this.setState({ listArray: [...this.state.listArray, this.state.listObj] });
+    this.setState({ filterArray: [...this.state.filterArray, this.state.listObj] });
+
     e.target.reset();
   };
 
   btnHandler = (e) => {
     let value = e.target.textContent;
     
-
     switch(value){
       case 'Friends':
-        this.state.listArray = this.state.listArray.filter((item) => {
-          return item.category === "Friends";
-        });
+        let temp = []
+        this.state.filterArray.filter(item =>{
+          if(item.category === 'Friends'){
+            temp.push(item)
+          }
+        })
+        this.setState({listArray: [...temp]})
         break
-        
-      case 'Family':
-        this.state.listArray = this.state.listArray.filter((item) => {
-          return item.category === "Family";
-        });
-        break
+
+       case 'Family':
+        let temp2 = []
+        this.state.filterArray.filter(item =>{
+          if(item.category === 'Family'){
+            temp2.push(item)
+          }
+        })
+        this.setState({listArray: [...temp2]})
+       break
+
+       case 'Collegue':
+        let temp3 = []
+        this.state.filterArray.filter(item =>{
+          if(item.category === 'Collegue'){
+            temp3.push(item)
+          }
+        })
+        this.setState({listArray: [...temp3]})
+       break
+
+       case 'All':
+        this.setState({listArray: [...this.state.filterArray]})
     }
-      this.setState({
-        fullName: null,
-        Number: null,
-      });
   };
 
   render() {
@@ -133,6 +154,7 @@ export default class Contact extends Component {
                   key={i}
                   name={item.fullName}
                   num={item.Number}
+                  category={item.category}
                 />
               );
             })}

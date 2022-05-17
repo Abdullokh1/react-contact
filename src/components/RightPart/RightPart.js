@@ -9,6 +9,7 @@ export default function RightPart (props) {
         <li className='output'>
           <h3 className='output-name mb-3'>Full Name: {props.name}</h3>
           <h3 className='output-name'>Number: {props.num}</h3>
+          <p className='filter-text'>{props.category}</p>
         </li>
       </ul>
 
